@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f8f5">
+  <meta name="theme-color" content="#ffffff">
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="SilentStream 112호. 최근 30일의 수업 재생목록을 한곳에서.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; object-src 'none'; form-action 'none'">
@@ -22,38 +22,27 @@
   </svg>
 
   <section id="gate" class="gate" aria-labelledby="gate-title">
-    <a class="brand gate-brand" href="./" aria-label="SilentStream 첫 화면"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span> SILENTSTREAM</a>
     <main class="gate-content">
-      <span class="eyebrow">YOUR CLASS, REPLAYED.</span>
-      <div class="room-number" aria-hidden="true">112<span>호</span></div>
-      <h1 id="gate-title">수업 다시보기</h1>
-      <p class="gate-description">비밀번호 네 자리를 입력해 주세요.</p>
+      <h1 id="gate-title">112<span>호</span></h1>
       <form id="unlock-form">
         <label class="sr-only" for="pin">네 자리 비밀번호</label>
-        <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="off" pattern="[0-9]{4}" maxlength="4" minlength="4" required aria-describedby="pin-error" autofocus>
+        <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="off" pattern="[0-9]{4}" maxlength="4" minlength="4" required aria-describedby="pin-error" placeholder="····" autofocus>
         <p id="pin-error" class="pin-error" role="status" aria-live="polite"></p>
-        <button class="enter-button" type="submit"><span>들어가기</span><span aria-hidden="true">→</span></button>
+        <button class="enter-button" type="submit" aria-label="입장"><span aria-hidden="true">→</span></button>
       </form>
     </main>
-    <footer class="gate-footer">A QUIET PLACE TO CATCH UP.</footer>
   </section>
 
   <div id="archive" class="archive" hidden>
-    <header class="topbar"><a class="brand" href="./"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span> SILENTSTREAM</a><button id="lock" class="lock-button"><svg><use href="#i-lock"/></svg>잠그기</button></header>
+    <header class="topbar"><div class="wordmark"><h1>112<span>호</span></h1><span class="brand">SILENTSTREAM</span></div><nav aria-label="목록 도구"><button id="refresh" class="icon-button" aria-label="새로고침" title="새로고침"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 5v6h-6"/></svg></button><button id="lock" class="icon-button" aria-label="잠그기" title="잠그기"><svg aria-hidden="true"><use href="#i-lock"/></svg></button></nav></header>
     <main class="page-main">
-      <section class="intro" aria-labelledby="page-title">
-        <div class="intro-top"><span class="room-badge"><span></span> ROOM 112</span><span class="eyebrow">CLASS ARCHIVE</span></div>
-        <h1 id="page-title">놓친 수업도,<br><span>다시 차분하게.</span></h1>
-        <p>최근 30일의 수업 재생목록을 한곳에서.</p>
-      </section>
       <section class="collection" aria-labelledby="collection-title">
-        <div class="collection-heading"><div><h2 id="collection-title">수업 재생목록</h2><span id="count" class="count">—</span></div><span id="range" class="range"></span></div>
+        <div class="collection-heading"><h2 id="collection-title">최근 30일</h2><span id="range" class="range"></span><span id="count" class="sr-only"></span></div>
         <div id="loading" class="empty" role="status">재생목록을 불러오고 있어요.</div>
         <div id="list" class="playlist-list"></div>
-        <div class="collection-footer"><p id="update-status" role="status" aria-live="polite"></p><button id="refresh" class="text-button">새로고침 <span aria-hidden="true">↻</span></button></div>
+        <p id="update-status" class="update-status" role="status" aria-live="polite"></p>
       </section>
     </main>
-    <footer class="page-footer"><span>SILENTSTREAM <span class="footer-dot">·</span> 112</span><span>수업이 없는 날은 표시되지 않아요.</span></footer>
   </div>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <dialog id="copy-dialog" aria-labelledby="copy-title"><form method="dialog"><h2 id="copy-title">링크 직접 복사</h2><p>아래 링크를 길게 누르거나 선택해 복사해 주세요.</p><label class="sr-only" for="copy-url">재생목록 링크</label><input id="copy-url" readonly><button class="enter-button">닫기</button></form></dialog>

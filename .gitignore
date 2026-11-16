@@ -3,3 +3,5 @@ artifacts/
 .env*
 *.log
 dist/
+design-review/
+scripts/contact-sheet.ps1
