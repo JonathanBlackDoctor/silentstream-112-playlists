@@ -1,7 +1,12 @@
 {
   "room": "m112",
-  "updatedAtUtc": "2026-11-16T05:52:29.7245433+00:00",
+  "updatedAtUtc": "2026-11-16T18:31:49.368Z",
   "items": [
+    {
+      "date": "2026-11-17",
+      "status": "ready",
+      "url": "https://www.youtube.com/playlist?list=PLTQXYAn9JYP0"
+    },
     {
       "date": "2026-11-16",
       "status": "ready",
