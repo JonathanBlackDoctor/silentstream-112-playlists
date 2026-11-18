@@ -2,15 +2,16 @@ import { dateRange, recentItems } from './data.mjs';
 
 const $ = selector => document.querySelector(selector);
 const PIN_HASH = '54a91e5d887479bc41beae6f297e3e412407a03742d5e7127456a3062b86ef43';
-const SESSION_KEY = 'ss112-open-v1';
+const UNLOCK_KEY = 'ss112-open-v1';
 const CACHE_KEY = 'ss112-playlists-v1';
 let unlocked = false, fetching = false, renderKey = '', lastPayload, toastTimer;
 const icon = name => `<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
 const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
 const shortDate = date => date.slice(5).replace('-', '.');
 
-function storageGet(storage, key) { try { return storage.getItem(key); } catch { return null; } }
-function storageSet(storage, key, value) { try { storage.setItem(key, value); } catch {} }
+function storageGet(name, key) { try { return window[name].getItem(key); } catch { return null; } }
+function storageSet(name, key, value) { try { window[name].setItem(key, value); } catch {} }
+function storageRemove(name, key) { try { window[name].removeItem(key); } catch {} }
 
 function render(payload) {
   const now = new Date(), items = recentItems(payload, now), range = dateRange(now);
@@ -51,7 +52,7 @@ async function load() {
     if (!unlocked) return;
     lastPayload = payload;
     render(payload);
-    storageSet(localStorage, CACHE_KEY, JSON.stringify(payload));
+    storageSet('localStorage', CACHE_KEY, JSON.stringify(payload));
     $('#update-status').textContent = '';
   } catch {
     if (!unlocked) return;
@@ -75,7 +76,7 @@ function openArchive() {
   $('#archive').hidden = false;
   $('#pin').value = '';
   try {
-    const cache = JSON.parse(storageGet(localStorage, CACHE_KEY));
+    const cache = JSON.parse(storageGet('localStorage', CACHE_KEY));
     recentItems(cache);
     lastPayload = cache;
     render(cache);
@@ -118,7 +119,8 @@ $('#unlock-form').addEventListener('submit', async event => {
       $('#pin').select();
       return;
     }
-    storageSet(sessionStorage, SESSION_KEY, 'open');
+    storageSet('localStorage', UNLOCK_KEY, 'open');
+    storageSet('sessionStorage', UNLOCK_KEY, 'open');
     openArchive();
   } catch { $('#pin-error').textContent = '연결을 확인하고 다시 시도해 주세요.'; }
   finally { button.disabled = false; }
@@ -128,16 +130,27 @@ $('#pin').addEventListener('input', () => {
   $('#pin').removeAttribute('aria-invalid');
   $('#pin-error').textContent = '';
 });
-$('#lock').addEventListener('click', () => {
+function lockArchive() {
   unlocked = false;
-  storageSet(sessionStorage, SESSION_KEY, '');
+  storageRemove('localStorage', UNLOCK_KEY);
+  storageRemove('sessionStorage', UNLOCK_KEY);
   $('#archive').hidden = true;
   $('#gate').hidden = false;
   $('#pin').focus();
   $('#toast').hidden = true;
+}
+$('#lock').addEventListener('click', lockArchive);
+window.addEventListener('storage', event => {
+  if (event.key === UNLOCK_KEY && event.newValue !== 'open') lockArchive();
 });
 $('#refresh').addEventListener('click', load);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) load(); });
 window.addEventListener('online', load);
 setInterval(() => { if (!document.hidden) load(); }, 60000);
-if (storageGet(sessionStorage, SESSION_KEY) === 'open') openArchive();
+const remembered = storageGet('localStorage', UNLOCK_KEY) === 'open';
+const currentSession = storageGet('sessionStorage', UNLOCK_KEY) === 'open';
+if (remembered || currentSession) {
+  // Preserve existing unlocked tabs when upgrading from tab-only storage.
+  if (currentSession) storageSet('localStorage', UNLOCK_KEY, 'open');
+  openArchive();
+}
