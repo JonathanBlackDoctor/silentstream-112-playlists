@@ -1,7 +1,12 @@
 {
   "room": "m112",
-  "updatedAtUtc": "2026-11-25T15:35:44.570Z",
+  "updatedAtUtc": "2026-11-26T19:37:17.407Z",
   "items": [
+    {
+      "date": "2026-11-27",
+      "status": "ready",
+      "url": "https://www.youtube.com/playlist?list=PLJkggdw1_Z-4"
+    },
     {
       "date": "2026-11-26",
       "status": "ready",
@@ -106,11 +111,6 @@
       "date": "2026-10-29",
       "status": "ready",
       "url": "https://www.youtube.com/playlist?list=PLWw5Ee3GVuKU"
-    },
-    {
-      "date": "2026-10-28",
-      "status": "ready",
-      "url": "https://www.youtube.com/playlist?list=PLb6L1GOkDnkI"
     }
   ]
 }
